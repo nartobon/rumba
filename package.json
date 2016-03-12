@@ -1,0 +1,21 @@
+{
+  "name": "rumba",
+  "version": "1.0.0",
+  "description": "Dead-simple API actions for Redux",
+  "main": "src/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://bitbucket.org/Graf009/rumba.git"
+  },
+  "author": "Oleg Orlov <mail@orlovoleg.com>",
+  "license": "MIT",
+  "dependencies": {
+    "immutable": "3.7.6",
+    "lodash.mapvalues": "4.1.0",
+    "lodash.merge": "4.1.0",
+    "normalizr": "2.0.0",
+    "reduce-reducers": "0.1.2",
+    "redux-actions": "0.9.1",
+    "superagent": "1.7.2"
+  }
+}

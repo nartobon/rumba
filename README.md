@@ -8,7 +8,6 @@
 * immutable
 * redux-actions
 * reduce-reducers
-* redux-thunk
 * normalizr
 * lodash.mapvalues
 * lodash.merge
