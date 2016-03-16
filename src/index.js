@@ -1,7 +1,7 @@
-import createAction from './lib/createAction';
-import * as reducers from './reducers';
+import createAction from './lib/createAction'
+import * as reducers from './reducers'
 
 export default {
   createAction,
   reducers
-};
+}

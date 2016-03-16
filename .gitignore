@@ -1,0 +1,14 @@
+### OSX ###
+.DS_Store
+
+### Intellij ###
+*.iml
+.idea/
+
+### Node ###
+npm-debug.log*
+
+# Dependency directory
+node_modules
+
+### Project out directory ###
