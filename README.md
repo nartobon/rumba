@@ -2,12 +2,8 @@
 
 > Dead-simple API actions for Redux
 
-### Package
+## Install
 
-* superagent
-* immutable
-* redux-actions
-* reduce-reducers
-* normalizr
-* lodash.mapvalues
-* lodash.merge
+```
+npm install rumba --save
+```

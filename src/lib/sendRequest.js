@@ -7,7 +7,8 @@ export default (opt) => (dispatch) => {
     payload: opt
   })
 
-  let req = request[opt.method.toLowerCase()](opt.endpoint)
+  const req = request[opt.method.toLowerCase()](opt.endpoint)
+  const debug = `${opt.method.toUpperCase()} ${opt.endpoint}`
 
   if (opt.headers) {
     req.set(opt.headers)
@@ -25,10 +26,10 @@ export default (opt) => (dispatch) => {
     req.set({ Authorization: `Bearer ${opt.token}` })
   }
   if (opt.auth) {
-    req = req.auth(...opt.auth)
+    req.auth(...opt.auth)
   }
 
-  req.end((err, { type, body }) => {
+  req.end((err, res) => {
     if (err) {
       return dispatch({
         type: 'rumba.failure',
@@ -37,14 +38,22 @@ export default (opt) => (dispatch) => {
       })
     }
 
+    if (!res) {
+      return dispatch({
+        type: 'tahoe.failure',
+        meta: opt,
+        payload: new Error(`Connection failed: ${debug}`)
+      })
+    }
+
     // handle json responses
-    if (type === 'application/json') {
+    if (res.type === 'application/json') {
       return dispatch({
         type: 'rumba.success',
         meta: opt,
         payload: {
-          raw: body,
-          normalized: entify(body, opt)
+          raw: res.body,
+          normalized: entify(res.body, opt)
         }
       })
     }
@@ -52,7 +61,7 @@ export default (opt) => (dispatch) => {
     dispatch({
       type: 'rumba.failure',
       meta: opt,
-      payload: new Error('Unknown response type')
+      payload: new Error(`Unknown response type: '${res.type}' from ${debug}`)
     })
   })
 }
