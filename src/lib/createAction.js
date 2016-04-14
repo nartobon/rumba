@@ -2,7 +2,7 @@ import mapValues from 'lodash.mapvalues'
 import merge from 'lodash.merge'
 import sendRequest from './sendRequest'
 
-const result = (fn, arg) => typeof fn === 'function' ? fn(arg) : fn
+const result = (fn, arg) => (typeof fn === 'function' ? fn(arg) : fn)
 
 // TODO: check entities cache in store and dont fetch if we have it already
 

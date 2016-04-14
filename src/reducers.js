@@ -8,7 +8,7 @@ const initialState = Map({
 })
 
 const ensureArray = (data) =>
-  Array.isArray(data) ? data : [ data ]
+  (Array.isArray(data) ? data : [data])
 
 // possible solutions:
 // - subsets become maps that are basically pointers to existing nodes in the entities store
@@ -23,7 +23,7 @@ const addEntities = (state, { payload: { normalized } }) => {
 // subset state
 const createSubset = (state, { payload: { subset } }) => {
   if (!subset) return state
-  const path = [ 'subsets', subset ]
+  const path = ['subsets', subset]
   if (state.hasIn(path)) return state
   const record = Map({
     id: subset,
@@ -34,7 +34,7 @@ const createSubset = (state, { payload: { subset } }) => {
 
 const setSubsetData = (state, { meta: { subset }, payload: { raw, normalized } }) => {
   if (!subset) return state
-  const path = [ 'subsets', subset ]
+  const path = ['subsets', subset]
   if (!state.hasIn(path)) return state // subset doesnt exist
   return state.updateIn(path, (subset) =>
     subset
@@ -47,7 +47,7 @@ const setSubsetData = (state, { meta: { subset }, payload: { raw, normalized } }
 
 const setSubsetError = (state, { meta: { subset }, payload }) => {
   if (!subset) return state
-  const path = [ 'subsets', subset ]
+  const path = ['subsets', subset]
   if (!state.hasIn(path)) return state // subset doesnt exist
   return state.updateIn(path, (subset) =>
     subset
