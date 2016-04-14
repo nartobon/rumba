@@ -1,9 +1,13 @@
-# rumba
+# @eagle/rumba
 
 > Dead-simple API actions for Redux
 
 ## Install
 
+```sh
+npm install --save @eagle/rumba
 ```
-npm install rumba --save
-```
+
+## Repository
+
+https://github.com/Graf009/rumba.git
