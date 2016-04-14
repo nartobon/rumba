@@ -39,7 +39,9 @@ const setSubsetData = (state, { meta: { subset }, payload: { raw, normalized } }
   return state.updateIn(path, (subset) =>
     subset
       .set('data', fromJS(raw))
-      .set('entities', Set(ensureArray(normalized.result)))
+      .set('entities', normalized
+        ? Set(ensureArray(normalized.result))
+        : Set())
       .set('pending', false)
       .set('error', null)
   )
