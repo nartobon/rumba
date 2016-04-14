@@ -28,7 +28,7 @@
     "superagent": "1.8.3"
   },
   "devDependencies": {
-    "@eagle/eslint-config-eagle": "1.0.2",
+    "@eagle/eslint-config-eagle": "1.0.3",
     "babel-cli": "6.7.5",
     "babel-eslint": "6.0.2",
     "babel-plugin-add-module-exports": "0.1.2",

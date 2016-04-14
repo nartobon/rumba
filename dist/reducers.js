@@ -60,7 +60,7 @@ var setSubsetData = function setSubsetData(state, _ref3) {
   var path = ['subsets', subset];
   if (!state.hasIn(path)) return state; // subset doesnt exist
   return state.updateIn(path, function (subset) {
-    return subset.set('data', (0, _immutable.fromJS)(raw)).set('entities', (0, _immutable.Set)(ensureArray(normalized.result))).set('pending', false).set('error', null);
+    return subset.set('data', (0, _immutable.fromJS)(raw)).set('entities', normalized ? (0, _immutable.Set)(ensureArray(normalized.result)) : (0, _immutable.Set)()).set('pending', false).set('error', null);
   });
 };
 
