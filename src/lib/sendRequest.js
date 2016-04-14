@@ -30,7 +30,14 @@ export default (opt) => (dispatch) => {
   }
 
   req.end((err, res) => {
+    if (!res && !err) {
+      err = new Error(`Connection failed: ${debug}`)
+    }
+    if (!err && res.type !== 'application/json') {
+      err = new Error(`Unknown response type: '${res.type}' from ${debug}`)
+    }
     if (err) {
+      if (opt.onError) opt.onError(err)
       return dispatch({
         type: 'rumba.failure',
         meta: opt,
@@ -38,30 +45,15 @@ export default (opt) => (dispatch) => {
       })
     }
 
-    if (!res) {
-      return dispatch({
-        type: 'tahoe.failure',
-        meta: opt,
-        payload: new Error(`Connection failed: ${debug}`)
-      })
-    }
-
     // handle json responses
-    if (res.type === 'application/json') {
-      return dispatch({
-        type: 'rumba.success',
-        meta: opt,
-        payload: {
-          raw: res.body,
-          normalized: opt.model ? entify(res.body, opt) : null
-        }
-      })
-    }
-
+    if (opt.onResponse) opt.onResponse(res)
     dispatch({
-      type: 'rumba.failure',
+      type: 'rumba.success',
       meta: opt,
-      payload: new Error(`Unknown response type: '${res.type}' from ${debug}`)
+      payload: {
+        raw: res.body,
+        normalized: opt.model ? entify(res.body, opt) : null
+      }
     })
   })
 }
