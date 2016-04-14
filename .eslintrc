@@ -1,6 +1,3 @@
 {
-  "extends": "rackt",
-  "rules": {
-    "valid-jsdoc": 2
-  }
+  "extends": "@eagle/eslint-config-eagle"
 }
