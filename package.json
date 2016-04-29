@@ -1,6 +1,6 @@
 {
   "name": "@eagle/rumba",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Dead-simple API actions for Redux",
   "main": "dist/index.js",
   "repository": {
