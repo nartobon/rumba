@@ -1,6 +1,6 @@
 {
   "name": "@eagle/rumba",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "Dead-simple API actions for Redux",
   "repository": {
     "type": "git",
