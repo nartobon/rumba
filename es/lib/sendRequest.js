@@ -1,25 +1,14 @@
-'use strict';
+import request from 'superagent';
+import entify from './entify';
 
-exports.__esModule = true;
-
-var _superagent = require('superagent');
-
-var _superagent2 = _interopRequireDefault(_superagent);
-
-var _entify = require('./entify');
-
-var _entify2 = _interopRequireDefault(_entify);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = function (opt) {
+export default (function (opt) {
   return function (dispatch) {
     dispatch({
       type: 'rumba.request',
       payload: opt
     });
 
-    var req = _superagent2.default[opt.method.toLowerCase()](opt.endpoint);
+    var req = request[opt.method.toLowerCase()](opt.endpoint);
     var debug = opt.method.toUpperCase() + ' ' + opt.endpoint;
 
     if (opt.headers) {
@@ -64,11 +53,9 @@ exports.default = function (opt) {
         meta: opt,
         payload: {
           raw: res.body,
-          normalized: opt.model ? (0, _entify2.default)(res.body, opt) : null
+          normalized: opt.model ? entify(res.body, opt) : null
         }
       });
     });
   };
-};
-
-module.exports = exports['default'];
+})

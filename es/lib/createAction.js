@@ -1,20 +1,6 @@
-'use strict';
-
-exports.__esModule = true;
-
-var _lodash = require('lodash.mapvalues');
-
-var _lodash2 = _interopRequireDefault(_lodash);
-
-var _lodash3 = require('lodash.merge');
-
-var _lodash4 = _interopRequireDefault(_lodash3);
-
-var _sendRequest = require('./sendRequest');
-
-var _sendRequest2 = _interopRequireDefault(_sendRequest);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+import mapValues from 'lodash.mapvalues';
+import merge from 'lodash.merge';
+import sendRequest from './sendRequest';
 
 var reserved = ['onResponse', 'onError'];
 var result = function result(fn, arg) {
@@ -38,7 +24,7 @@ var result = function result(fn, arg) {
  if you define a function, it will receive options.params as an argument
  */
 
-exports.default = function () {
+export default (function () {
   var defaults = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
   return function () {
     var opt = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
@@ -46,7 +32,7 @@ exports.default = function () {
     // merge our multitude of option objects together
     // defaults = options defined in createAction
     // opt = options specified in action creator
-    var options = (0, _lodash2.default)((0, _lodash4.default)({}, opt, defaults), function (v, k, _ref) {
+    var options = mapValues(merge({}, opt, defaults), function (v, k, _ref) {
       var params = _ref.params;
 
       if (reserved.indexOf(k) !== -1) return v;
@@ -56,8 +42,6 @@ exports.default = function () {
     if (!options.method) throw new Error('Missing method');
     if (!options.endpoint) throw new Error('Missing endpoint');
 
-    return (0, _sendRequest2.default)(options);
+    return sendRequest(options);
   };
-};
-
-module.exports = exports['default'];
+})
