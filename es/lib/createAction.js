@@ -24,24 +24,36 @@ var result = function result(fn, arg) {
  if you define a function, it will receive options.params as an argument
  */
 
+var isReserved = function isReserved(k) {
+  return reserved.indexOf(k) !== -1;
+};
+
+/*
+ merge our multitude of option objects together
+ defaults = options defined in createAction
+ opt = options specified in action creator
+ */
+export var mergeOptions = function mergeOptions(defaults, opt) {
+  return mapValues(merge({}, opt, defaults), function (v, k, _ref) {
+    var params = _ref.params;
+
+    if (isReserved(k)) return v;
+    return result(v, params);
+  });
+};
+
 export default (function () {
   var defaults = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
   return function () {
     var opt = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
 
-    // merge our multitude of option objects together
-    // defaults = options defined in createAction
-    // opt = options specified in action creator
-    var options = mapValues(merge({}, opt, defaults), function (v, k, _ref) {
-      var params = _ref.params;
-
-      if (reserved.indexOf(k) !== -1) return v;
-      return result(v, params);
-    });
+    var options = mergeOptions(defaults, opt);
 
     if (!options.method) throw new Error('Missing method');
     if (!options.endpoint) throw new Error('Missing endpoint');
 
-    return sendRequest(options);
+    return function (dispatch) {
+      return sendRequest({ options: options, dispatch: dispatch });
+    };
   };
 })
