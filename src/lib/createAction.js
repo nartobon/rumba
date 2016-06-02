@@ -25,17 +25,26 @@ const result = (fn, arg) => (typeof fn === 'function' ? fn(arg) : fn)
  if you define a function, it will receive options.params as an argument
  */
 
-export default (defaults = {}) => (opt = {}) => {
-  // merge our multitude of option objects together
-  // defaults = options defined in createAction
-  // opt = options specified in action creator
-  const options = mapValues(merge({}, opt, defaults), (v, k, { params }) => {
-    if (reserved.indexOf(k) !== -1) return v
+const isReserved = (k) => reserved.indexOf(k) !== -1
+
+/*
+ merge our multitude of option objects together
+ defaults = options defined in createAction
+ opt = options specified in action creator
+ */
+export const mergeOptions = (defaults, opt) => mapValues(
+  merge({}, opt, defaults),
+  (v, k, { params }) => {
+    if (isReserved(k)) return v
     return result(v, params)
-  })
+  }
+)
+
+export default (defaults = {}) => (opt = {}) => {
+  const options = mergeOptions(defaults, opt)
 
   if (!options.method) throw new Error('Missing method')
   if (!options.endpoint) throw new Error('Missing endpoint')
 
-  return sendRequest(options)
+  return (dispatch) => sendRequest({ options, dispatch })
 }

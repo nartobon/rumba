@@ -1,35 +1,9 @@
 import request from 'superagent'
 import entify from './entify'
 
-export default (opt) => (dispatch) => {
-  dispatch({
-    type: 'rumba.request',
-    payload: opt
-  })
-
-  const req = request[opt.method.toLowerCase()](opt.endpoint)
-  const debug = `${opt.method.toUpperCase()} ${opt.endpoint}`
-
-  if (opt.headers) {
-    req.set(opt.headers)
-  }
-  if (opt.query) {
-    req.query(opt.query)
-  }
-  if (opt.body) {
-    req.send(opt.body)
-  }
-  if (opt.withCredentials) {
-    req.withCredentials()
-  }
-  if (opt.token) {
-    req.set({ Authorization: `Bearer ${opt.token}` })
-  }
-  if (opt.auth) {
-    req.auth(...opt.auth)
-  }
-
-  req.end((err, res) => {
+const createResponseHandler = ({ options, dispatch }) => {
+  const debug = `${options.method.toUpperCase()} ${options.endpoint}`
+  return (err, res) => {
     if (!res && !err) {
       err = new Error(`Connection failed: ${debug}`)
     }
@@ -37,23 +11,54 @@ export default (opt) => (dispatch) => {
       err = new Error(`Unknown response type: '${res.type}' from ${debug}`)
     }
     if (err) {
-      if (opt.onError) opt.onError(err)
-      return dispatch({
+      dispatch({
         type: 'rumba.failure',
-        meta: opt,
+        meta: options,
         payload: err
       })
+      if (options.onError) options.onError(err)
+      return
     }
 
     // handle json responses
-    if (opt.onResponse) opt.onResponse(res)
     dispatch({
       type: 'rumba.success',
-      meta: opt,
+      meta: options,
       payload: {
         raw: res.body,
-        normalized: opt.model ? entify(res.body, opt) : null
+        normalized: options.model && entify(res.body, options)
       }
     })
+    if (options.onResponse) options.onResponse(res)
+  }
+}
+
+export default ({ options, dispatch }) => {
+  dispatch({
+    type: 'rumba.request',
+    payload: options
   })
+
+  const req = request[options.method.toLowerCase()](options.endpoint)
+
+  if (options.headers) {
+    req.set(options.headers)
+  }
+  if (options.query) {
+    req.query(options.query)
+  }
+  if (options.body) {
+    req.send(options.body)
+  }
+  if (options.withCredentials) {
+    req.withCredentials()
+  }
+  if (options.token) {
+    req.set({ Authorization: `Bearer ${options.token}` })
+  }
+  if (options.auth) {
+    req.auth(...options.auth)
+  }
+
+  req.end(createResponseHandler({ options, dispatch }))
 }
