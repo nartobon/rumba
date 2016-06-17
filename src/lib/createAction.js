@@ -17,7 +17,7 @@ const result = (fn, arg) => (typeof fn === 'function' ? fn(arg) : fn)
  - subset (optional)(string)
  - method (required)(get, post, put, delete, or patch)
  - params (object)
- - endpoint (required)(url tring)
+ - endpoint (required)(url string)
  - model (required)(normalizr model)
  - collection (default false)(boolean)
 
@@ -33,7 +33,7 @@ const isReserved = (k) => reserved.indexOf(k) !== -1
  opt = options specified in action creator
  */
 export const mergeOptions = (defaults, opt) => mapValues(
-  merge({}, opt, defaults),
+  merge({}, defaults, opt),
   (v, k, { params }) => {
     if (isReserved(k)) return v
     return result(v, params)
