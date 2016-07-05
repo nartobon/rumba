@@ -16,7 +16,7 @@ var result = function result(fn, arg) {
  - subset (optional)(string)
  - method (required)(get, post, put, delete, or patch)
  - params (object)
- - endpoint (required)(url tring)
+ - endpoint (required)(url string)
  - model (required)(normalizr model)
  - collection (default false)(boolean)
 
@@ -34,7 +34,7 @@ var isReserved = function isReserved(k) {
  opt = options specified in action creator
  */
 export var mergeOptions = function mergeOptions(defaults, opt) {
-  return mapValues(merge({}, opt, defaults), function (v, k, _ref) {
+  return mapValues(merge({}, defaults, opt), function (v, k, _ref) {
     var params = _ref.params;
 
     if (isReserved(k)) return v;

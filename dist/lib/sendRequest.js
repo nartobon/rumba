@@ -30,7 +30,7 @@ var createResponseHandler = function createResponseHandler(_ref) {
         meta: options,
         payload: err
       });
-      if (options.onError) options.onError(err);
+      if (options.onError) options.onError(err, res);
       return;
     }
 
