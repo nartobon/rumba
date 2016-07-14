@@ -24,6 +24,7 @@ const result = (fn, arg) => (typeof fn === 'function' ? fn(arg) : fn)
  - endpoint (required)(url tring)
  - model (optional)(normalizr model)
  - collection (default false)(boolean)
+ - fresh (default to false)(boolean)
 
  - headers (optional)(function)
  - query (optional)(object)
