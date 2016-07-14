@@ -36,11 +36,13 @@ var addEntities = function addEntities(state, _ref) {
 
 // subset state
 var createSubset = function createSubset(state, _ref2) {
-  var subset = _ref2.payload.subset;
+  var _ref2$payload = _ref2.payload;
+  var subset = _ref2$payload.subset;
+  var fresh = _ref2$payload.fresh;
 
   if (!subset) return state;
   var path = ['subsets', subset];
-  if (state.hasIn(path)) return state;
+  if (!fresh && state.hasIn(path)) return state;
   var record = (0, _immutable.Map)({
     id: subset,
     pending: true
