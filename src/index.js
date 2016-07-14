@@ -3,5 +3,5 @@ import * as reducers from './reducers'
 
 export default {
   createAction,
-  reducers
+  reducers,
 }

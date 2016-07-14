@@ -4,7 +4,7 @@ import compose from 'reduce-reducers'
 
 const initialState = Map({
   subsets: Map(),
-  entities: Map()
+  entities: Map(),
 })
 
 const ensureArray = (data) =>
@@ -27,7 +27,7 @@ const createSubset = (state, { payload: { subset, fresh } }) => {
   if (!fresh && state.hasIn(path)) return state
   const record = Map({
     id: subset,
-    pending: true
+    pending: true,
   })
   return state.setIn(path, record)
 }
@@ -64,5 +64,5 @@ const setSubsetError = (state, { meta: { subset }, payload }) => {
 export const api = handleActions({
   'rumba.request': createSubset,
   'rumba.failure': setSubsetError,
-  'rumba.success': compose(setSubsetData, addEntities)
+  'rumba.success': compose(setSubsetData, addEntities),
 }, initialState)

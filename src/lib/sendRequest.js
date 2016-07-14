@@ -14,7 +14,7 @@ const createResponseHandler = ({ options, dispatch }) => {
       dispatch({
         type: 'rumba.failure',
         meta: options,
-        payload: err
+        payload: err,
       })
       if (options.onError) options.onError(err)
       return
@@ -26,8 +26,8 @@ const createResponseHandler = ({ options, dispatch }) => {
       meta: options,
       payload: {
         raw: res.body,
-        normalized: options.model && entify(res.body, options)
-      }
+        normalized: options.model && entify(res.body, options),
+      },
     })
     if (options.onResponse) options.onResponse(res)
   }
@@ -36,7 +36,7 @@ const createResponseHandler = ({ options, dispatch }) => {
 export default ({ options, dispatch, getState }) => {
   dispatch({
     type: 'rumba.request',
-    payload: options
+    payload: options,
   })
 
   const req = request[options.method.toLowerCase()](options.endpoint)
