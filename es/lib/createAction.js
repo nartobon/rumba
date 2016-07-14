@@ -19,7 +19,7 @@ var result = function result(fn, arg) {
  - subset (optional)(string)
  - method (required)(get, post, put, delete, or patch)
  - params (object)
- - endpoint (required)(url tring)
+ - endpoint (required)(url string)
  - model (optional)(normalizr model)
  - collection (default false)(boolean)
  - fresh (default to false)(boolean)
