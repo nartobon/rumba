@@ -62,7 +62,7 @@ var isReserved = function isReserved(k) {
  opt = options specified in action creator
  */
 var mergeOptions = exports.mergeOptions = function mergeOptions(defaults, opt) {
-  return (0, _lodash2.default)((0, _lodash4.default)({}, opt, defaults), function (v, k, _ref) {
+  return (0, _lodash2.default)((0, _lodash4.default)({}, defaults, opt), function (v, k, _ref) {
     var params = _ref.params;
 
     if (isReserved(k)) return v;

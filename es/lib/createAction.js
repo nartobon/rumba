@@ -47,7 +47,7 @@ var isReserved = function isReserved(k) {
  opt = options specified in action creator
  */
 export var mergeOptions = function mergeOptions(defaults, opt) {
-  return mapValues(merge({}, opt, defaults), function (v, k, _ref) {
+  return mapValues(merge({}, defaults, opt), function (v, k, _ref) {
     var params = _ref.params;
 
     if (isReserved(k)) return v;
