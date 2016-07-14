@@ -4,7 +4,8 @@ import sendRequest from './sendRequest'
 
 const reserved = [
   'onResponse',
-  'onError'
+  'onError',
+  'getToken',
 ]
 const result = (fn, arg) => (typeof fn === 'function' ? fn(arg) : fn)
 
@@ -14,12 +15,24 @@ const result = (fn, arg) => (typeof fn === 'function' ? fn(arg) : fn)
  app must have redux-thunk installed
  possible options:
 
+ - onError (optional)(function)
+ - onResponse (optional)(function)
+
  - subset (optional)(string)
  - method (required)(get, post, put, delete, or patch)
  - params (object)
  - endpoint (required)(url tring)
- - model (required)(normalizr model)
+ - model (optional)(normalizr model)
  - collection (default false)(boolean)
+
+ - headers (optional)(function)
+ - query (optional)(object)
+ - body (optional)(object)
+ - withCredentials (default false)(boolean)
+ - token (optional)(string)
+ - getToken (optional)(function)
+ - auth (optional)(array)
+
 
  all options can either be a value, or a function that returns a value.
  if you define a function, it will receive options.params as an argument
@@ -46,5 +59,5 @@ export default (defaults = {}) => (opt = {}) => {
   if (!options.method) throw new Error('Missing method')
   if (!options.endpoint) throw new Error('Missing endpoint')
 
-  return (dispatch) => sendRequest({ options, dispatch })
+  return (dispatch, getState) => sendRequest({ options, dispatch, getState })
 }

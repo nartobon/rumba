@@ -33,7 +33,7 @@ const createResponseHandler = ({ options, dispatch }) => {
   }
 }
 
-export default ({ options, dispatch }) => {
+export default ({ options, dispatch, getState }) => {
   dispatch({
     type: 'rumba.request',
     payload: options
@@ -55,6 +55,12 @@ export default ({ options, dispatch }) => {
   }
   if (options.token) {
     req.set({ Authorization: `Bearer ${options.token}` })
+  }
+  if (options.getToken) {
+    const token = options.getToken(getState())
+    if (token) {
+      req.set({ Authorization: `Bearer ${token}` })
+    }
   }
   if (options.auth) {
     req.auth(...options.auth)
