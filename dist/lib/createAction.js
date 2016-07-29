@@ -17,7 +17,7 @@ var _sendRequest2 = _interopRequireDefault(_sendRequest);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var reserved = ['onResponse', 'onError', 'getToken'];
+var reserved = ['onResponse', 'onError', 'getToken', 'getLocale'];
 var result = function result(fn, arg) {
   return typeof fn === 'function' ? fn(arg) : fn;
 };
@@ -45,6 +45,7 @@ var result = function result(fn, arg) {
  - withCredentials (default false)(boolean)
  - token (optional)(string)
  - getToken (optional)(function)
+ - getLocale (optional)(function)
  - auth (optional)(array)
 
 

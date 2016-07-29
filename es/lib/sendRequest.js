@@ -69,6 +69,12 @@ export default (function (_ref2) {
       req.set({ Authorization: 'Bearer ' + token });
     }
   }
+  if (options.getLocale) {
+    var locale = options.getLocale(getState());
+    if (locale) {
+      req.set({ 'Accept-Language': locale });
+    }
+  }
   if (options.auth) {
     req.auth.apply(req, options.auth);
   }

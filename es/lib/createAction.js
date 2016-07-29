@@ -2,7 +2,7 @@ import mapValues from 'lodash.mapvalues';
 import merge from 'lodash.merge';
 import sendRequest from './sendRequest';
 
-var reserved = ['onResponse', 'onError', 'getToken'];
+var reserved = ['onResponse', 'onError', 'getToken', 'getLocale'];
 var result = function result(fn, arg) {
   return typeof fn === 'function' ? fn(arg) : fn;
 };
@@ -30,6 +30,7 @@ var result = function result(fn, arg) {
  - withCredentials (default false)(boolean)
  - token (optional)(string)
  - getToken (optional)(function)
+ - getLocale (optional)(function)
  - auth (optional)(array)
 
 
