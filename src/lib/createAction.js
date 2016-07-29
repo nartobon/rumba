@@ -6,6 +6,7 @@ const reserved = [
   'onResponse',
   'onError',
   'getToken',
+  'getLocale',
 ]
 const result = (fn, arg) => (typeof fn === 'function' ? fn(arg) : fn)
 
@@ -32,6 +33,7 @@ const result = (fn, arg) => (typeof fn === 'function' ? fn(arg) : fn)
  - withCredentials (default false)(boolean)
  - token (optional)(string)
  - getToken (optional)(function)
+ - getLocale (optional)(function)
  - auth (optional)(array)
 
 
