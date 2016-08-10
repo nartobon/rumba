@@ -33,7 +33,7 @@ const createResponseHandler = ({ options, dispatch }) => {
   }
 }
 
-export default ({ options, dispatch, getState }) => {
+export default ({ options, dispatch }) => {
   dispatch({
     type: 'rumba.request',
     payload: options,
@@ -55,18 +55,6 @@ export default ({ options, dispatch, getState }) => {
   }
   if (options.token) {
     req.set({ Authorization: `Bearer ${options.token}` })
-  }
-  if (options.getToken) {
-    const token = options.getToken(getState())
-    if (token) {
-      req.set({ Authorization: `Bearer ${token}` })
-    }
-  }
-  if (options.getLocale) {
-    const locale = options.getLocale(getState())
-    if (locale) {
-      req.set({ 'Accept-Language': locale })
-    }
   }
   if (options.auth) {
     req.auth(...options.auth)

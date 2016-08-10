@@ -8,7 +8,7 @@ const reserved = [
   'getToken',
   'getLocale',
 ]
-const result = (fn, arg) => (typeof fn === 'function' ? fn(arg) : fn)
+const result = (fn, ...arg) => (typeof fn === 'function' ? fn(...arg) : fn)
 
 // TODO: check entities cache in store and dont fetch if we have it already
 
@@ -32,8 +32,6 @@ const result = (fn, arg) => (typeof fn === 'function' ? fn(arg) : fn)
  - body (optional)(object)
  - withCredentials (default false)(boolean)
  - token (optional)(string)
- - getToken (optional)(function)
- - getLocale (optional)(function)
  - auth (optional)(array)
 
 
@@ -48,19 +46,19 @@ const isReserved = (k) => reserved.indexOf(k) !== -1
  defaults = options defined in createAction
  opt = options specified in action creator
  */
-export const mergeOptions = (defaults, opt) => mapValues(
+export const mergeOptions = (defaults, opt, state) => mapValues(
   merge({}, defaults, opt),
   (v, k, { params }) => {
     if (isReserved(k)) return v
-    return result(v, params)
+    return result(v, params, state)
   }
 )
 
-export default (defaults = {}) => (opt = {}) => {
-  const options = mergeOptions(defaults, opt)
+export default (defaults = {}) => (opt = {}) => (dispatch, getState) => {
+  const options = mergeOptions(defaults, opt, getState())
 
   if (!options.method) throw new Error('Missing method')
   if (!options.endpoint) throw new Error('Missing endpoint')
 
-  return (dispatch, getState) => sendRequest({ options, dispatch, getState })
+  sendRequest({ options, dispatch })
 }
