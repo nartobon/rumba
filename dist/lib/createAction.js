@@ -17,9 +17,13 @@ var _sendRequest2 = _interopRequireDefault(_sendRequest);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var reserved = ['onResponse', 'onError', 'getToken', 'getLocale'];
-var result = function result(fn, arg) {
-  return typeof fn === 'function' ? fn(arg) : fn;
+var reserved = ['onResponse', 'onError'];
+var result = function result(fn) {
+  for (var _len = arguments.length, arg = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    arg[_key - 1] = arguments[_key];
+  }
+
+  return typeof fn === 'function' ? fn.apply(undefined, arg) : fn;
 };
 
 // TODO: check entities cache in store and dont fetch if we have it already
@@ -44,8 +48,6 @@ var result = function result(fn, arg) {
  - body (optional)(object)
  - withCredentials (default false)(boolean)
  - token (optional)(string)
- - getToken (optional)(function)
- - getLocale (optional)(function)
  - auth (optional)(array)
 
 
@@ -61,28 +63,30 @@ var isReserved = function isReserved(k) {
  merge our multitude of option objects together
  defaults = options defined in createAction
  opt = options specified in action creator
+ state = current state of store
  */
-var mergeOptions = exports.mergeOptions = function mergeOptions(defaults, opt) {
+var mergeOptions = exports.mergeOptions = function mergeOptions(defaults, opt, state) {
   return (0, _lodash2.default)((0, _lodash4.default)({}, defaults, opt), function (v, k, _ref) {
     var params = _ref.params;
 
     if (isReserved(k)) return v;
-    return result(v, params);
+    return result(v, params, state);
   });
 };
 
-exports.default = function () {
+var createAction = function createAction() {
   var defaults = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
   return function () {
     var opt = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
-
-    var options = mergeOptions(defaults, opt);
-
-    if (!options.method) throw new Error('Missing method');
-    if (!options.endpoint) throw new Error('Missing endpoint');
-
     return function (dispatch, getState) {
-      return (0, _sendRequest2.default)({ options: options, dispatch: dispatch, getState: getState });
+      var options = mergeOptions(defaults, opt, getState());
+
+      if (!options.method) throw new Error('Missing method');
+      if (!options.endpoint) throw new Error('Missing endpoint');
+
+      (0, _sendRequest2.default)({ options: options, dispatch: dispatch });
     };
   };
 };
+
+exports.default = createAction;

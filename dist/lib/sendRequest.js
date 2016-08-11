@@ -47,10 +47,9 @@ var createResponseHandler = function createResponseHandler(_ref) {
   };
 };
 
-exports.default = function (_ref2) {
+var sendRequest = function sendRequest(_ref2) {
   var options = _ref2.options;
   var dispatch = _ref2.dispatch;
-  var getState = _ref2.getState;
 
   dispatch({
     type: 'rumba.request',
@@ -74,18 +73,6 @@ exports.default = function (_ref2) {
   if (options.token) {
     req.set({ Authorization: 'Bearer ' + options.token });
   }
-  if (options.getToken) {
-    var token = options.getToken(getState());
-    if (token) {
-      req.set({ Authorization: 'Bearer ' + token });
-    }
-  }
-  if (options.getLocale) {
-    var locale = options.getLocale(getState());
-    if (locale) {
-      req.set({ 'Accept-Language': locale });
-    }
-  }
   if (options.auth) {
     req.auth.apply(req, options.auth);
   }
@@ -93,4 +80,5 @@ exports.default = function (_ref2) {
   req.end(createResponseHandler({ options: options, dispatch: dispatch }));
 };
 
+exports.default = sendRequest;
 module.exports = exports['default'];

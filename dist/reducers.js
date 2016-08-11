@@ -77,7 +77,7 @@ var setSubsetError = function setSubsetError(state, _ref4) {
 };
 
 // exported actions
-var api = exports.api = (0, _reduxActions.handleActions)({
+var api = exports.api = (0, _reduxActions.handleActions)({ // eslint-disable-line import/prefer-default-export
   'rumba.request': createSubset,
   'rumba.failure': setSubsetError,
   'rumba.success': (0, _reduceReducers2.default)(setSubsetData, addEntities)

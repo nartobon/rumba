@@ -66,7 +66,7 @@ var setSubsetError = function setSubsetError(state, _ref4) {
 };
 
 // exported actions
-export var api = handleActions({
+export var api = handleActions({ // eslint-disable-line import/prefer-default-export
   'rumba.request': createSubset,
   'rumba.failure': setSubsetError,
   'rumba.success': compose(setSubsetData, addEntities)
