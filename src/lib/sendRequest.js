@@ -33,7 +33,7 @@ const createResponseHandler = ({ options, dispatch }) => {
   }
 }
 
-export default ({ options, dispatch }) => {
+const sendRequest = ({ options, dispatch }) => {
   dispatch({
     type: 'rumba.request',
     payload: options,
@@ -62,3 +62,5 @@ export default ({ options, dispatch }) => {
 
   req.end(createResponseHandler({ options, dispatch }))
 }
+
+export default sendRequest

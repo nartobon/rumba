@@ -53,7 +53,7 @@ export const mergeOptions = (defaults, opt, state) => mapValues(
   }
 )
 
-export default (defaults = {}) => (opt = {}) => (dispatch, getState) => {
+const createAction = (defaults = {}) => (opt = {}) => (dispatch, getState) => {
   const options = mergeOptions(defaults, opt, getState())
 
   if (!options.method) throw new Error('Missing method')
@@ -61,3 +61,5 @@ export default (defaults = {}) => (opt = {}) => (dispatch, getState) => {
 
   sendRequest({ options, dispatch })
 }
+
+export default createAction
