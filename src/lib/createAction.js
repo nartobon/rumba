@@ -5,8 +5,6 @@ import sendRequest from './sendRequest'
 const reserved = [
   'onResponse',
   'onError',
-  'getToken',
-  'getLocale',
 ]
 const result = (fn, ...arg) => (typeof fn === 'function' ? fn(...arg) : fn)
 
@@ -45,6 +43,7 @@ const isReserved = (k) => reserved.indexOf(k) !== -1
  merge our multitude of option objects together
  defaults = options defined in createAction
  opt = options specified in action creator
+ state = current state of store
  */
 export const mergeOptions = (defaults, opt, state) => mapValues(
   merge({}, defaults, opt),
