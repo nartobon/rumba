@@ -25,7 +25,8 @@ const result = (fn, ...arg) => (typeof fn === 'function' ? fn(...arg) : fn)
  - collection (default false)(boolean)
  - fresh (default to false)(boolean)
 
- - headers (optional)(function)
+ - headers (optional)(object)
+ - field (optional)(object)
  - query (optional)(object)
  - body (optional)(object)
  - withCredentials (default false)(boolean)
@@ -39,6 +40,7 @@ const result = (fn, ...arg) => (typeof fn === 'function' ? fn(...arg) : fn)
  */
 
 const isReserved = k => (reserved.indexOf(k) !== -1)
+const noop = () => {}
 
 /*
  merge our multitude of option objects together
@@ -60,7 +62,17 @@ const createAction = (defaults = {}) => (opt = {}) => (dispatch, getState) => {
   if (!options.method) throw new Error('Missing method')
   if (!options.endpoint) throw new Error('Missing endpoint')
 
-  sendRequest({ options, dispatch })
+  const reqPromise = sendRequest({ options, dispatch })
+  reqPromise.catch(noop)
+
+  if (options.onResponse) reqPromise.then(options.onResponse, noop)
+  if (options.onError) reqPromise.catch(err => options.onError(err, err.response))
+
+  const actionPromise = noop
+  actionPromise.then = (resolve, reject) => reqPromise.then(resolve, reject)
+  actionPromise.catch = cb => this.then(undefined, cb)
+
+  return actionPromise
 }
 
 export default createAction
