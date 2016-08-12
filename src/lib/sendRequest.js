@@ -56,6 +56,9 @@ const sendRequest = ({ options, dispatch }) => {
   if (options.token) {
     req.set({ Authorization: `Bearer ${options.token}` })
   }
+  if (options.locale) {
+    req.set({ 'Accept-Language': options.locale })
+  }
   if (options.auth) {
     req.auth(...options.auth)
   }
