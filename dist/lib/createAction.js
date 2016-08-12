@@ -48,6 +48,7 @@ var result = function result(fn) {
  - body (optional)(object)
  - withCredentials (default false)(boolean)
  - token (optional)(string)
+ - locale (optional)(string)
  - auth (optional)(array)
 
 

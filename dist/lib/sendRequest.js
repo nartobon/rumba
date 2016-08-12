@@ -73,6 +73,9 @@ var sendRequest = function sendRequest(_ref2) {
   if (options.token) {
     req.set({ Authorization: 'Bearer ' + options.token });
   }
+  if (options.locale) {
+    req.set({ 'Accept-Language': options.locale });
+  }
   if (options.auth) {
     req.auth.apply(req, options.auth);
   }
