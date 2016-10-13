@@ -31,7 +31,9 @@ var addEntities = function addEntities(state, _ref) {
   var normalized = _ref.payload.normalized;
 
   if (!normalized) return state;
-  return (0, _immutable.fromJS)({ entities: normalized.entities }).mergeDeep(state);
+  // TODO entity not work
+  // return fromJS({ entities: normalized.entities }).mergeDeep(state)
+  return state.mergeDeep((0, _immutable.fromJS)({ entities: normalized.entities }));
 };
 
 // subset state

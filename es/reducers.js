@@ -20,7 +20,9 @@ var addEntities = function addEntities(state, _ref) {
   var normalized = _ref.payload.normalized;
 
   if (!normalized) return state;
-  return fromJS({ entities: normalized.entities }).mergeDeep(state);
+  // TODO entity not work
+  // return fromJS({ entities: normalized.entities }).mergeDeep(state)
+  return state.mergeDeep(fromJS({ entities: normalized.entities }));
 };
 
 // subset state
