@@ -1,15 +1,16 @@
 {
-  "presets": ["stage-0"],
-  "plugins": ["transform-runtime"],
-
   "env": {
     "commonjs": {
-      "presets": ["es2015-loose"],
+      "presets": [
+        ["@eagle/babel-preset-eagle", {"loose": true}]
+      ],
       "plugins": ["add-module-exports"]
     },
 
     "es": {
-      "presets": ["es2015-loose-native-modules"]
+      "presets": [
+        ["@eagle/babel-preset-eagle", {"loose": true, "modules": false}]
+      ]
     }
   }
 }
