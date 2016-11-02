@@ -38,7 +38,7 @@ const result = (fn, ...arg) => (typeof fn === 'function' ? fn(...arg) : fn)
  if you define a function, it will receive options.params as an argument
  */
 
-const isReserved = (k) => reserved.indexOf(k) !== -1
+const isReserved = k => (reserved.indexOf(k) !== -1)
 
 /*
  merge our multitude of option objects together

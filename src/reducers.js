@@ -7,8 +7,7 @@ const initialState = Map({
   entities: Map(),
 })
 
-const ensureArray = (data) =>
-  (Array.isArray(data) ? data : [data])
+const ensureArray = data => (Array.isArray(data) ? data : [data])
 
 // possible solutions:
 // - subsets become maps that are basically pointers to existing nodes in the entities store
@@ -38,8 +37,8 @@ const setSubsetData = (state, { meta: { subset }, payload: { raw, normalized } }
   if (!subset) return state
   const path = ['subsets', subset]
   if (!state.hasIn(path)) return state // subset doesnt exist
-  return state.updateIn(path, (subset) =>
-    subset
+  return state.updateIn(path, subsetState =>
+    subsetState
       .set('data', fromJS(raw))
       .set('entities', normalized
         ? Set(ensureArray(normalized.result))
@@ -53,8 +52,8 @@ const setSubsetError = (state, { meta: { subset }, payload }) => {
   if (!subset) return state
   const path = ['subsets', subset]
   if (!state.hasIn(path)) return state // subset doesnt exist
-  return state.updateIn(path, (subset) =>
-    subset
+  return state.updateIn(path, subsetState =>
+    subsetState
       .delete('data')
       .delete('entities')
       .set('error', payload)
