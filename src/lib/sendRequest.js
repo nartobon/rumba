@@ -39,38 +39,38 @@ const checkResponce = ({ res, options }) => {
   }
 }
 
-const sendRequest = async ({ options, dispatch }) => {
+const sendRequest = ({ options, dispatch }) => {
   dispatch({
     type: 'rumba.request',
     payload: options,
   })
 
   const req = request[options.method.toLowerCase()](options.endpoint)
-
-  try {
-    prepareOptions({ req, options })
-    const res = await req
-
-    dispatch({
-      type: 'rumba.success',
-      meta: options,
-      payload: {
-        raw: res.body,
-        normalized: options.model && entify(res.body, options),
-      },
+  prepareOptions({ req, options })
+  req
+    .then((res) => {
+      checkResponce({ res, options })
+      return res
     })
-
-    checkResponce({ res, options })
-    return res
-  } catch (err) {
-    dispatch({
-      type: 'rumba.failure',
-      meta: options,
-      payload: err,
+    .then((res) => {
+      dispatch({
+        type: 'rumba.success',
+        meta: options,
+        payload: {
+          raw: res.body,
+          normalized: options.model && entify(res.body, options),
+        },
+      })
+      return res
     })
-
-    throw err
-  }
+    .catch((err) => {
+      dispatch({
+        type: 'rumba.failure',
+        meta: options,
+        payload: err,
+      })
+      throw err
+    })
 }
 
 export default sendRequest
