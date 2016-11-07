@@ -47,7 +47,8 @@ const sendRequest = ({ options, dispatch }) => {
 
   const req = request[options.method.toLowerCase()](options.endpoint)
   prepareOptions({ req, options })
-  req
+
+  return req
     .then((res) => {
       checkResponce({ res, options })
       return res
