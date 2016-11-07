@@ -34,7 +34,7 @@
     "superagent": "2.3.0"
   },
   "devDependencies": {
-    "@eagle/babel-preset-eagle": "1.0.4",
+    "@eagle/babel-preset-eagle": "1.0.5",
     "@eagle/eslint-config-eagle": "1.4.2",
     "ava": "0.16.0",
     "babel-cli": "6.18.0",
