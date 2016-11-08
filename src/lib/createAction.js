@@ -69,8 +69,14 @@ const createAction = (defaults = {}) => (opt = {}) => (dispatch, getState) => {
   if (options.onError) reqPromise.catch(err => options.onError(err, err.response))
 
   const actionPromise = noop
-  actionPromise.then = (resolve, reject) => reqPromise.then(resolve, reject)
-  actionPromise.catch = cb => this.then(undefined, cb)
+
+  actionPromise.then = function _then(resolve, reject) {
+    return reqPromise.then(resolve, reject)
+  }
+
+  actionPromise.catch = function _catch(cb) {
+    return this.then(undefined, cb)
+  }
 
   return actionPromise
 }
