@@ -50,7 +50,7 @@ const noop = () => {}
  */
 export const mergeOptions = (defaults, opt, state) => mapValues(
   merge({}, defaults, opt),
-  (v, k, { params }) => {
+  (v, k, { params = {} }) => {
     if (isReserved(k)) return v
     return result(v, params, state)
   }
