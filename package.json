@@ -1,10 +1,10 @@
 {
-  "name": "@eagle/rumba",
+  "name": "@rtobon/rumba",
   "version": "1.5.3",
   "description": "Dead-simple API actions for Redux",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Graf009/rumba.git"
+    "url": "https://github.com/nartobon/rumba.git"
   },
   "author": "Oleg Orlov <mail@orlovoleg.com>",
   "license": "MIT",
@@ -34,8 +34,8 @@
     "superagent": "2.3.0"
   },
   "devDependencies": {
-    "@eagle/babel-preset-eagle": "1.0.5",
-    "@eagle/eslint-config-eagle": "1.4.2",
+    "@rtobon/babel-preset-eagle": "1.0.5",
+    "@rtobon/eslint-config-eagle": "1.4.2",
     "ava": "0.16.0",
     "babel-cli": "6.18.0",
     "babel-core": "6.18.2",
